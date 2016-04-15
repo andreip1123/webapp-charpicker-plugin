@@ -21,7 +21,7 @@ var archiveLocation = 'target/archive/' + archiveName + '/';
 
 
  // Concatenate JS Files, use closure compiler
-gulp.task('minify-js', function() {
+gulp.task('minify-js', ['es6-to-common'], function() {
     return gulp.src(['node_modules/google-closure-library/closure/goog/**/*.js', resourceLocation + '/deps.js', resourceLocation + '/main.js'])
         .pipe(closureCompiler({
           compilerPath: 'node_modules/google-closure-compiler/compiler.jar',
