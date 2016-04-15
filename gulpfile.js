@@ -3,6 +3,7 @@ var gulp = require('gulp');
 // Include plugins
 
 var concat = require('gulp-concat');
+var babel = require('gulp-babel');
 var htmlreplace = require('gulp-html-replace');
 var uglify = require('gulp-uglify');
 var closureCompiler = require('gulp-closure-compiler');
@@ -110,7 +111,14 @@ gulp.task('archive', ['resource_css', 'resource_js', 'resource_base', 'web_js', 
 gulp.task('cleanup',['archive'], function(){
     return del(targetLocation + '/archive/**', {force: true});
 });
+
+gulp.task('es6-to-common', function() {
+    return gulp.src(['node_modules/gulp-closure-compiler/node_modules/google-closure-compiler/lib/gulp/index.js'])
+        .pipe(babel())
+        .pipe(gulp.dest('node_modules/gulp-closure-compiler/node_modules/google-closure-compiler/lib/gulp/'));
+});
+
 gulp.task('minify-all', ['minify-js', 'uglifyplugin', 'minify-css', 'minify-plugin-css', 'replacehtml']);
 // Default Task
-gulp.task('prepare-package', ['minify-all', 'resource_base', 'resource_js', 'resource_css', 'web_js', 'base_rest', 'archive', 'cleanup']);
+gulp.task('prepare-package', ['es6-to-common', 'minify-all', 'resource_base', 'resource_js', 'resource_css', 'web_js', 'base_rest', 'archive', 'cleanup']);
 
