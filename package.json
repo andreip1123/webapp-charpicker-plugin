@@ -7,7 +7,7 @@
     "url": "git+https://github.com/oxygenxml/webapp-charpicker-plugin.git"
   },
   "scripts": {
-    "package": "npm install && gulp prepare-package"
+    "package": "node --use_strict && npm install && gulp prepare-package"
   },
   "author": "",
   "license": "Apache-2.0",
